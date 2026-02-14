@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Historia 🌷</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;1,700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --color-papel: #fefcf5;
+            --color-texto: #5d4037;
+            --color-tulipan: #ff8a80;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #2c3e50;
+            font-family: 'Playfair Display', serif;
+            overflow: hidden;
+            /* Importante para que no salga barra de scroll */
+        }
+
+        /* ESTO ES LO QUE ARREGLA EL MOVIMIENTO */
+        .libro {
+            display: flex;
+            width: 600vw;
+            /* 6 páginas = 600% del ancho */
+            height: 100vh;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            /* Movimiento suave */
+        }
+
+        .pagina {
+            width: 100vw;
+            /* Cada página ocupa exactamente el ancho de la pantalla */
+            height: 100vh;
+            background-color: var(--color-papel);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.05);
+            border-right: 2px solid rgba(0, 0, 0, 0.1);
+            /* Sombra de pliegue */
+        }
+
+        /* Adornos de Tulipanes en las esquinas */
+        .tulipan-decor {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.4;
+        }
+
+        .top-left {
+            top: 20px;
+            left: 20px;
+        }
+
+        .bottom-right {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        /* Estilo de las fotos con marco */
+        .collage {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .foto {
+            width: 250px;
+            border: 12px solid #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: rotate(var(--r));
+            transition: 0.3s;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #d32f2f;
+            margin-bottom: 10px;
+        }
+
+        p {
+            max-width: 600px;
+            line-height: 1.8;
+            text-align: center;
+            color: var(--color-texto);
+            font-weight: 500;
+        }
+
+        /* Bloqueo del Capítulo 6 */
+        #capitulo-final {
+            background-color: #fff0f0;
+        }
+
+        .bloqueo {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            padding: 10px;
+            border: 2px solid var(--color-tulipan);
+            border-radius: 5px;
+            margin-top: 10px;
+            font-family: inherit;
+        }
+
+        .carta-abierta {
+            display: none;
+            max-width: 500px;
+            padding: 40px;
+            background: white;
+            border: 1px solid #ddd;
+        }
+
+        /* Instrucción fija */
+        .tip {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        /* Contenedor del collage para que las fotos floten */
+        .collage-container {
+            position: relative;
+            width: 90%;
+            height: 450px;
+            /* Espacio para que las fotos y notas respiren */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Fotos tipo Polaroid mejoradas */
+        .foto {
+            position: absolute;
+            width: 220px;
+            border: 10px solid #fff;
+            border-bottom: 40px solid #fff;
+            /* Espacio para escribir abajo */
+            box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s;
+            object-fit: cover;
+        }
+
+        /* Post-its o Notas */
+        .post-it {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            padding: 15px;
+            background: #fff9c4;
+            /* Amarillo clarito */
+            box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.1);
+            font-family: 'Dancing Script', cursive;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transform: rotate(var(--r));
+        }
+
+        /* Variantes de colores de post-its */
+        .post-it.azul {
+            background: #e3f2fd;
+        }
+
+        .post-it.rosa {
+            background: #fce4ec;
+        }
+
+        /* Adornos extra (puedes usar emojis o imágenes pequeñas) */
+        .sticker {
+            position: absolute;
+            font-size: 1.5rem;
+            z-index: 5;
+        }
+
+        /* Contenedor para que nada se salga de la página */
+        .pagina {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Estilo de los corazones que caen */
+        .corazon-caida {
+            position: absolute;
+            top: -10%;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            /* Para que no estorben al hacer clic */
+            animation: caer linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes caer {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Efecto de brillo en los bordes para los emojis fijos */
+        .borde-decorativo {
+            position: absolute;
+            font-size: 25px;
+            filter: drop-shadow(0 0 5px rgba(255, 182, 193, 0.5));
+            animation: flotar 3s ease-in-out infinite;
+        }
+
+        @keyframes flotar {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* CARTA FINAL */
+        .carta-abierta {
+            display: none;
+            max-width: 80%;
+            background: #fdf5e6;
+            padding: 40px;
+            border: 1px solid #d4a373;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            line-height: 1.5;
+            color: #5d4037;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .bloqueo {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* RESPONSIVE CELULAR HORIZONTAL */
+        @media (max-height: 500px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .foto {
+                width: 160px;
+                border-bottom: 25px solid #fff;
+            }
+
+            .post-it {
+                width: 110px;
+                height: 110px;
+                font-size: 0.8rem;
+            }
+
+            .collage-container {
+                height: 280px;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+        }
+
+        .tip {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 0.8rem;
+            z-index: 100;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="libro" id="libro">
+        <section class="pagina">
+            <span class="borde-decorativo" style="top: 5%; left: 2%;">✨</span>
+            <span class="borde-decorativo" style="top: 5%; right: 3%; animation-delay: 1s;">💖</span>
+            <span class="borde-decorativo" style="bottom: 10%; left: 3%; animation-delay: 0.5s;">🌷</span>
+            <span class="borde-decorativo" style="bottom: 5%; right: 2%; animation-delay: 1.5s;">✨</span>
+
+            <h1>Capítulo 1: El Comienzo</h1>
+
+            <div class="collage-container">
+                <div class="post-it rosa" style="top: 35%; left: 31%; --r: -10deg;">Que feo me rechazabas preciosa!
+                    😭​❤️</div>
+                <div class="post-it azul" style="top: 60%; right: 35%; --r: 8deg;">Te adoro mi amorcito 🥰​</div>
+
+                <img src="inicio1.jpg" class="foto" style="left: 15%; top: 50px; --r: -5deg; z-index: 2;">
+                <img src="captura_chat.jpg" class="foto" style="left: 40%; top: 20px; --r: 2deg; z-index: 1;">
+                <img src="inicio2.jpg" class="foto" style="right: 15%; top: 40px; --r: 6deg; z-index: 2;">
+                <span class="corazon-caida" style="left: 10%; animation-duration: 5s; animation-delay: 0s;">❤️</span>
+                <span class="corazon-caida" style="left: 25%; animation-duration: 7s; animation-delay: 2s;">💖</span>
+                <span class="corazon-caida" style="left: 45%; animation-duration: 6s; animation-delay: 1s;">💗</span>
+                <span class="corazon-caida" style="left: 65%; animation-duration: 8s; animation-delay: 3s;">❤️</span>
+                <span class="corazon-caida" style="left: 85%; animation-duration: 5s; animation-delay: 0.5s;">💕</span>
+                <span class="corazon-caida" style="left: 95%; animation-duration: 9s; animation-delay: 4s;">🌸</span>
+
+            </div>
+
+            <p style="margin-top: 40px;">
+                Todo empezó muy extraño sin tú siquiera saber de mi existencia...
+                tomándole capturas a tus historias porque no tenías muchas fotos y
+                yo no quería dejar de verte, amor de mi vida. 🥹💘
+            </p>
+
+            <div class="post-it" style="bottom: 50px; right: 20%; --r: -5deg; width: 150px; height: 80px;">
+                Te veías tan preciosa seimpre mi amorcito...
+            </div>
+
+        </section>
+
+        <section class="pagina">
+            <span class="borde-decorativo" style="top: 8%; left: 4%;">🌷</span>
+            <span class="borde-decorativo" style="top: 8%; right: 4%; animation-delay: 0.8s;">✨</span>
+            <span class="borde-decorativo" style="bottom: 8%; left: 4%; animation-delay: 1.2s;">💖</span>
+            <span class="borde-decorativo" style="bottom: 8%; right: 4%; animation-delay: 0.3s;">💍</span>
+
+            <h1>Capítulo 2: El "Sí"</h1>
+
+            <div class="collage-container" style="width: 100%; height: 55vh; position: relative;">
+
+                <div class="foto-container"
+                    style="left: 50%; top: 10%; transform: translateX(-50%) rotate(-2deg); z-index: 3;">
+                    <div class="pin"></div>
+                    <img src="novios.jpg" class="foto" style="width: 200px; position: static;">
+                </div>
+
+                <div class="foto-container" style="left: 55%; top: 30%; transform: rotate(-10deg); z-index: 1;">
+                    <div class="pin" style="background-color: #ffb74d;"></div> <img src="novios2.jpeg" class="foto"
+                        style="width: 200px; position: static; opacity: 0.9;">
+                </div>
+
+                <div class="post-it rosa" style="top: 15%; right: 15%; --r: 12deg; z-index: 4;">
+                    Ese 60% que me dio una inmensa felicidad de regreso a casita 🥹❤️
+                </div>
+
+                <div class="post-it azul" style="bottom: 10%; left: 20%; --r: -8deg; z-index: 4;">
+                    ¡Ese primer besito delicioso! 😘​
+                </div>
+            </div>
+
+            <div style="padding: 0 12%; position: relative; z-index: 10;">
+                <p>
+                    Ese día moría de nervios y te consta jaja, pero cuando aceptaste ser mi novia
+                    aunque sea un 60%, no tienes una idea de lo inmensamente feliz que fui...
+                    y ni se diga de poder darte ese primer besito que guardo en mi mente para siempre. 🥰💘
+                </p>
+            </div>
+
+            <div class="post-it"
+                style="bottom: 50px; right: 10%; --r: 5deg; width: 140px; height: 80px; background-color: #fce4ec;">
+                Sude como nunca ese dia 😂
+            </div>
+
+            <span class="corazon-caida" style="left: 15%; animation-duration: 6s;">❤️</span>
+            <span class="corazon-caida" style="left: 35%; animation-duration: 8s; animation-delay: 1s;">💖</span>
+            <span class="corazon-caida" style="left: 55%; animation-duration: 7s; animation-delay: 2s;">💗</span>
+            <span class="corazon-caida" style="left: 75%; animation-duration: 5s; animation-delay: 0.5s;">💘</span>
+            <span class="corazon-caida" style="left: 90%; animation-duration: 9s; animation-delay: 1.5s;">🌷</span>
+        </section>
+
+        <section class="pagina">
+            <span class="borde-decorativo" style="top: 5%; left: 5%;">💝</span>
+            <span class="borde-decorativo" style="top: 5%; right: 5%; animation-delay: 1s;">✨</span>
+            <span class="borde-decorativo" style="bottom: 5%; left: 5%; animation-delay: 0.5s;">🌹</span>
+            <span class="borde-decorativo" style="bottom: 5%; right: 5%; animation-delay: 1.2s;">💘</span>
+
+            <h1>Capítulo 3: Nuestro Primer 14</h1>
+
+            <div class="collage-container"
+                style="width: 100%; height: 50vh; display: flex; justify-content: center; align-items: center; gap: 20px;">
+
+                <div class="foto-container" style="position: relative; transform: rotate(-3deg);">
+                    <div class="pin"></div>
+                    <img src="sanvalentin1.jpg" class="foto" style="width: 220px; position: static;">
+                </div>
+
+                <div class="foto-container" style="position: relative; transform: rotate(0deg);">
+                    <div class="pin"></div>
+                    <img src="sanvalentin2.jpg" class="foto" style="width: 220px; position: static;">
+                </div>
+
+                <div class="foto-container" style="position: relative; transform: rotate(3deg);">
+                    <div class="pin"></div>
+                    <img src="sanvalentin3.jpg" class="foto" style="width: 220px; position: static;">
+                </div>
+
+                <div class="post-it rosa" style="top: -20px; right: 5%; --r: 15deg; z-index: 5;">
+                    Se me antojaron unos jokeis ​😋​
+                </div>
+            </div>
+
+            <div style="padding: 0 10%; margin-top: 20px;">
+                <p>
+                    Nuestro primer San Valentín juntos donde quiero y voy a buscar que cada uno sea especial y bonito
+                    sin importar
+                    el tiempo que pase mi amor y más alla del dia , realmente siempre sea San Valentin para
+                    nosotros.​😍​💗​
+                </p>
+            </div>
+
+            <div class="post-it azul" style="bottom: 40px; left: 15%; --r: -5deg; width: 160px; height: 80px;">
+                Un día muy bonito sin duda.❤️
+            </div>
+
+            <span class="corazon-caida" style="left: 5%; animation-duration: 5s;">❤️</span>
+            <span class="corazon-caida" style="left: 20%; animation-duration: 7s; animation-delay: 2s;">💖</span>
+            <span class="corazon-caida" style="left: 40%; animation-duration: 6s; animation-delay: 1s;">💗</span>
+            <span class="corazon-caida" style="left: 60%; animation-duration: 8s; animation-delay: 3s;">🌹</span>
+            <span class="corazon-caida" style="left: 80%; animation-duration: 5s; animation-delay: 0.5s;">💕</span>
+            <span class="corazon-caida" style="left: 95%; animation-duration: 6s; animation-delay: 2.5s;">❤️</span>
+        </section>
+
+        <section class="pagina">
+            <span class="borde-decorativo" style="top: 5%; left: 5%;">💝</span>
+            <span class="borde-decorativo" style="top: 5%; right: 5%; animation-delay: 1s;">✨</span>
+            <span class="borde-decorativo" style="bottom: 5%; left: 5%; animation-delay: 0.5s;">🌹</span>
+            <span class="borde-decorativo" style="bottom: 5%; right: 5%; animation-delay: 1.2s;">💘</span>
+            <h1>Capítulo 4: Nuestra Primer Salida Lejos</h1>
+            <div class="collage-container"
+                style="width: 100%; height: 50vh; display: flex; justify-content: center; align-items: center; gap: 20px;">
+
+                <div class="foto-container" style="position: relative; transform: rotate(-3deg);">
+                    <div class="pin"></div>
+                    <img src="salida1.jpg" class="foto" style="width: 220px; position: static;">
+                </div>
+
+                <div class="foto-container" style="position: relative; transform: rotate(0deg);">
+                    <div class="pin"></div>
+                    <img src="salida2.jpg" class="foto" style="width: 220px; position: static;">
+                </div>
+
+                <div class="foto-container" style="position: relative; transform: rotate(3deg);">
+                    <div class="pin"></div>
+                    <img src="salida3.jpg" class="foto" style="width: 220px; position: static;">
+                </div>
+
+                <div class="post-it rosa" style="top: -20px; right: 5%; --r: 15deg; z-index: 5;">
+                    Ni aguantamaos nada de subir mi amor jaja.😂​💗​
+                </div>
+            </div>
+
+            <div style="padding: 0 10%; margin-top: 20px;">
+                <p>
+                    Nuestra primer salida lejos mi amor jaja , donde nos vimos mas tempranito y tu sentias que te perdia
+                    pero ayy fue
+                    un dia muy bonito buscando el momento adecuado para darte el anillo , me hace tanta ilusión pensar
+                    en nuestros futros viajes
+                    y conocer nuevos lugares juntos.😍​💗​
+                </p>
+            </div>
+
+            <div class="post-it azul" style="bottom: 40px; left: 15%; --r: -5deg; width: 160px; height: 80px;">
+                Practicando para el de matrimonio.😍​💗​
+            </div>
+
+            <span class="corazon-caida" style="left: 5%; animation-duration: 5s;">❤️</span>
+            <span class="corazon-caida" style="left: 20%; animation-duration: 7s; animation-delay: 2s;">💖</span>
+            <span class="corazon-caida" style="left: 40%; animation-duration: 6s; animation-delay: 1s;">💗</span>
+            <span class="corazon-caida" style="left: 60%; animation-duration: 8s; animation-delay: 3s;">🌹</span>
+            <span class="corazon-caida" style="left: 80%; animation-duration: 5s; animation-delay: 0.5s;">💕</span>
+            <span class="corazon-caida" style="left: 95%; animation-duration: 6s; animation-delay: 2.5s;">❤️</span>
+        </section>
+
+        <section class="pagina">
+            <span class="borde-decorativo" style="top: 5%; left: 5%;">💝</span>
+            <span class="borde-decorativo" style="top: 5%; right: 5%; animation-delay: 1s;">✨</span>
+            <span class="borde-decorativo" style="bottom: 5%; left: 5%; animation-delay: 0.5s;">🌹</span>
+            <span class="borde-decorativo" style="bottom: 5%; right: 5%; animation-delay: 1.2s;">💘</span>
+            <h1>Capítulo 5: Cumpleaños</h1>
+            <div class="collage-container"
+                style="width: 100%; height: 50vh; display: flex; justify-content: center; align-items: center; gap: 20px;">
+
+                <div class="foto-container" style="position: relative; transform: rotate(-3deg);">
+                    <div class="pin"></div>
+                    <img src="cumple1.jpg" class="foto" style="width: 220px; position: static;">
+                </div>
+
+                <div class="foto-container" style="position: relative; transform: rotate(0deg);">
+                    <div class="pin"></div>
+                    <img src="cumple2.jpg" class="foto" style="width: 220px; position: static;">
+                </div>
+
+                <div class="foto-container" style="position: relative; transform: rotate(3deg);">
+                    <div class="pin"></div>
+                    <img src="cumple3.jpg" class="foto" style="width: 220px; position: static;">
+                </div>
+
+                <div class="post-it rosa" style="top: -20px; right: 5%; --r: 15deg; z-index: 5;">
+                    Sigo sin superar mi regalo mi amor jaja 😍​💗​​
+                </div>
+            </div>
+
+            <div style="padding: 0 10%; margin-top: 20px;">
+                <p>
+                    Ya hemos pasado por fin ambos juntos un cumple juntos y ha sido tan bonitos que no me veo viviendo
+                    al menos el mio de otra forma
+                    y ojala poder estar en los tuyos siempre....bueno mientras nos casamos poq jaja ahi ya no sera una
+                    opción preciosa y creeme que siempre
+                    buscare que lo disfrutes al maximo,te lo prometo amor de mi vida.💗​🥹​
+                </p>
+            </div>
+
+            <div class="post-it azul" style="bottom: 40px; left: 15%; --r: -5deg; width: 160px; height: 80px;">
+                Ten por seguro que siemore buscare hacer especial tu cumple.😍​💗​
+            </div>
+
+            <span class="corazon-caida" style="left: 5%; animation-duration: 5s;">❤️</span>
+            <span class="corazon-caida" style="left: 20%; animation-duration: 7s; animation-delay: 2s;">💖</span>
+            <span class="corazon-caida" style="left: 40%; animation-duration: 6s; animation-delay: 1s;">💗</span>
+            <span class="corazon-caida" style="left: 60%; animation-duration: 8s; animation-delay: 3s;">🌹</span>
+            <span class="corazon-caida" style="left: 80%; animation-duration: 5s; animation-delay: 0.5s;">💕</span>
+            <span class="corazon-caida" style="left: 95%; animation-duration: 6s; animation-delay: 2.5s;">❤️</span>
+        </section>
+
+        <section class="pagina" id="capitulo-final">
+            <div id="trivia" class="bloqueo">
+                <h2>¿Cuál es nuestra fecha de aniversario?</h2>
+                <p>(Escríbela en formato DD/MM/AAAA)</p>
+                <input type="text" id="respuesta" placeholder="Ej: 14/02/2024">
+                <button onclick="verificar()"
+                    style="cursor: pointer; background: var(--color-tulipan); color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-left: 10px;">Abrir</button>
+            </div>
+
+            <div id="carta" class="carta-abierta">
+                <h1>Para mi esposita...💗​</h1>
+                <p>Escribo esto mientras te fuiste a dormir enojadita mi amor o tristesita lo cual para mi sin duda
+                    seria peor
+                    porque de por si es feito que no pasaremos este dia juntos amor de mi vida y aunque me esforce no se
+                    que tal te parezca
+                    este San Valentin , si fue mejor el anterior pero creeme que siempre buscare al menos hacer un
+                    detalle , sea manual , material
+                    o digital jeje poq somos ingenieros mi amorcito y sabes que las manualidades no se me dan mucho pero
+                    aun asi lo hare y sobre todo siempre eso si o si
+                    consentirte mucho amor de mi vida y bueno espero te guste este pequeño detalle y nuestro San
+                    Valentin atrasado mi amor , te amo inmensamente mi futura esposita
+
+
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <div class="tip">Presiona [ENTER] para pasar la página mi amor 💗​</div>
+
+    <script>
+        let paginaActual = 0;
+        const totalPaginas = 6;
+        const libro = document.getElementById('libro');
+
+        document.addEventListener('keydown', (e) => {
+            // Detecta Enter
+            if (e.key === 'Enter') {
+                // Evita que avance si está en el input de la última página
+                if (document.activeElement.tagName === 'INPUT') return;
+
+                if (paginaActual < totalPaginas - 1) {
+                    paginaActual++;
+                    const desplazamiento = paginaActual * 100;
+                    libro.style.transform = `translateX(-${desplazamiento}vw)`;
+                }
+            }
+        });
+
+        function verificar() {
+            const resp = document.getElementById('respuesta').value;
+            // Pon la fecha que quieras aquí
+            if (resp === "31/08/2024") {
+                document.getElementById('trivia').style.display = 'none';
+                document.getElementById('carta').style.display = 'block';
+            } else {
+                alert("Mmm... esa no es la fecha, mi amor.💗​🥹​¡Intenta de nuevo!");
+            }
+        }
+    </script>
+</body>
+
+</html>
