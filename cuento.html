@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nuestra Historia en Tulipanes 🌷</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;1,700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -16,32 +14,24 @@
             --color-tulipan: #ff8a80;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: #2c3e50;
             font-family: 'Playfair Display', serif;
             overflow: hidden;
-            /* Importante para que no salga barra de scroll */
         }
 
-        /* ESTO ES LO QUE ARREGLA EL MOVIMIENTO */
+        /* CONTENEDOR - 7 secciones (Portada + 6 Capítulos) */
         .libro {
             display: flex;
-            width: 600vw;
-            /* 6 páginas = 600% del ancho */
+            width: 700vw; 
             height: 100vh;
             transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-            /* Movimiento suave */
         }
 
         .pagina {
             width: 100vw;
-            /* Cada página ocupa exactamente el ancho de la pantalla */
             height: 100vh;
             background-color: var(--color-papel);
             display: flex;
@@ -52,281 +42,97 @@
             position: relative;
             box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.05);
             border-right: 2px solid rgba(0, 0, 0, 0.1);
-            /* Sombra de pliegue */
         }
 
-        /* Adornos de Tulipanes en las esquinas */
-        .tulipan-decor {
-            position: absolute;
-            font-size: 2rem;
-            opacity: 0.4;
-        }
-
-        .top-left {
-            top: 20px;
-            left: 20px;
-        }
-
-        .bottom-right {
-            bottom: 20px;
-            right: 20px;
-        }
-
-        /* Estilo de las fotos con marco */
-        .collage {
-            display: flex;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .foto {
-            width: 250px;
-            border: 12px solid #fff;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transform: rotate(var(--r));
-            transition: 0.3s;
-        }
-
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
-            color: #d32f2f;
-            margin-bottom: 10px;
-        }
-
-        p {
-            max-width: 600px;
-            line-height: 1.8;
-            text-align: center;
-            color: var(--color-texto);
-            font-weight: 500;
-        }
-
-        /* Bloqueo del Capítulo 6 */
-        #capitulo-final {
-            background-color: #fff0f0;
-        }
-
-        .bloqueo {
-            text-align: center;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        input {
-            padding: 10px;
-            border: 2px solid var(--color-tulipan);
-            border-radius: 5px;
-            margin-top: 10px;
-            font-family: inherit;
-        }
-
-        .carta-abierta {
-            display: none;
-            max-width: 500px;
-            padding: 40px;
-            background: white;
-            border: 1px solid #ddd;
-        }
-
-        /* Instrucción fija */
-        .tip {
-            position: fixed;
-            bottom: 10px;
-            width: 100%;
-            text-align: center;
+        /* PORTADA */
+        .portada {
+            background: linear-gradient(45deg, #ff8a80, #ff5252);
             color: white;
-            font-size: 0.8rem;
+            border-right: 15px solid #d32f2f;
         }
+        .portada h1 { color: white; font-size: 4rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); }
 
-        /* Contenedor del collage para que las fotos floten */
+        /* FOTOS Y COLLAGE */
         .collage-container {
             position: relative;
             width: 90%;
-            height: 450px;
-            /* Espacio para que las fotos y notas respiren */
+            height: 50vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* Fotos tipo Polaroid mejoradas */
+        .foto-container { position: absolute; display: inline-block; }
+
         .foto {
-            position: absolute;
-            width: 220px;
+            width: 230px;
             border: 10px solid #fff;
             border-bottom: 40px solid #fff;
-            /* Espacio para escribir abajo */
             box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s;
             object-fit: cover;
         }
 
-        /* Post-its o Notas */
+        .pin {
+            width: 15px; height: 15px; background: #d32f2f;
+            border-radius: 50%; position: absolute; top: -5px; left: 50%;
+            transform: translateX(-50%); z-index: 10;
+        }
+
         .post-it {
             position: absolute;
-            width: 120px;
-            height: 120px;
-            padding: 15px;
+            width: 130px; height: 130px; padding: 15px;
             background: #fff9c4;
-            /* Amarillo clarito */
             box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.1);
             font-family: 'Dancing Script', cursive;
-            font-size: 0.9rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            display: flex; justify-content: center; align-items: center; text-align: center;
             transform: rotate(var(--r));
-        }
-
-        /* Variantes de colores de post-its */
-        .post-it.azul {
-            background: #e3f2fd;
-        }
-
-        .post-it.rosa {
-            background: #fce4ec;
-        }
-
-        /* Adornos extra (puedes usar emojis o imágenes pequeñas) */
-        .sticker {
-            position: absolute;
-            font-size: 1.5rem;
             z-index: 5;
         }
 
-        /* Contenedor para que nada se salga de la página */
-        .pagina {
-            position: relative;
-            overflow: hidden;
-        }
+        h1 { font-family: 'Dancing Script', cursive; font-size: 3rem; color: #d32f2f; margin-bottom: 10px; }
+        p { max-width: 600px; line-height: 1.6; text-align: center; color: var(--color-texto); font-weight: 500; }
 
-        /* Estilo de los corazones que caen */
+        /* ANIMACIONES */
         .corazon-caida {
-            position: absolute;
-            top: -10%;
-            font-size: 20px;
-            user-select: none;
-            pointer-events: none;
-            /* Para que no estorben al hacer clic */
-            animation: caer linear infinite;
-            z-index: 0;
+            position: absolute; top: -10%; font-size: 20px;
+            animation: caer linear infinite; z-index: 0;
         }
-
         @keyframes caer {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(110vh) rotate(360deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Efecto de brillo en los bordes para los emojis fijos */
-        .borde-decorativo {
-            position: absolute;
-            font-size: 25px;
-            filter: drop-shadow(0 0 5px rgba(255, 182, 193, 0.5));
-            animation: flotar 3s ease-in-out infinite;
-        }
+        .borde-decorativo { position: absolute; font-size: 25px; animation: flotar 3s infinite; opacity: 0.6; }
+        @keyframes flotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        @keyframes flotar {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }/* CARTA FINAL */
+        /* CARTA FINAL */
         .carta-abierta {
-            display: none;
-            max-width: 80%;
-            background: #fdf5e6;
-            padding: 40px;
-            border: 1px solid #d4a373;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.5rem;
-            line-height: 1.5;
-            color: #5d4037;
-            overflow-y: auto;
-            max-height: 80vh;
+            display: none; width: 85%; max-height: 80vh; padding: 30px;
+            background: #fdf5e6; border: 1px solid #d4a373;
+            font-family: 'Dancing Script', cursive; font-size: 1.3rem; overflow-y: auto;
         }
 
-        .bloqueo { text-align: center; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        /* AJUSTES PARA MÓVIL */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem !important; }
+            .foto { width: 150px !important; border-bottom: 25px solid #fff !important; }
+            .post-it { width: 90px !important; height: 90px !important; font-size: 0.7rem !important; }
+            .collage-container { height: 35vh !important; }
+            p { font-size: 0.85rem !important; }
+            .portada h1 { font-size: 2.5rem; }
+        }
 
-       /* AJUSTES PARA MÓVIL (PANTALLA VERTICAL) */
-@media (max-width: 600px) {
-    .libro {
-        width: 600vw; /* Asegura que las 6 páginas sigan alineadas horizontalmente */
-    }
+        @media (orientation: portrait) {
+            body::before {
+                content: "Gira tu celular para una mejor experiencia 🔄";
+                position: fixed; top: 0; left: 0; right: 0;
+                background: var(--color-tulipan); color: white;
+                text-align: center; z-index: 9999; font-size: 0.8rem; padding: 5px;
+            }
+        }
 
-    h1 {
-        font-size: 2rem !important; /* Títulos más chicos para que no ocupen media pantalla */
-        margin-bottom: 5px;
-    }
-
-    .collage-container {
-        height: 40vh !important; /* Reducimos el área de fotos */
-        flex-direction: column; /* Si usaste flex, que se pongan una arriba de otra */
-        gap: 5px;
-    }
-
-    .foto {
-        width: 140px !important; /* Fotos más pequeñas para que quepan varias */
-        border: 6px solid #fff !important;
-        border-bottom: 25px solid #fff !important;
-    }
-
-    /* Ajustamos los post-its para que no tapen las fotos en pantallas chicas */
-    .post-it {
-        width: 80px !important;
-        height: 80px !important;
-        font-size: 0.6rem !important;
-        padding: 5px !important;
-    }
-
-    p {
-        font-size: 0.85rem !important;
-        max-width: 90% !important;
-        line-height: 1.3 !important;
-        margin-top: 10px !important;
-    }
-
-    .carta-abierta {
-        padding: 20px !important;
-        font-size: 1rem !important;
-        max-width: 95% !important;
-    }
-}
-
-/* Tip para que ella sepa que debe girar el cel si quiere verlo mejor */
-@media (orientation: portrait) {
-    body::before {
-        content: "Gira tu celular para una mejor experiencia 🔄";
-        position: fixed;
-        top: 0; left: 0; right: 0;
-        background: var(--color-tulipan);
-        color: white;
-        text-align: center;
-        z-index: 9999;
-        font-size: 0.7rem;
-        padding: 5px;
-    }
-}
-
-        .tip { position: fixed; bottom: 10px; width: 100%; text-align: center; color: white; font-size: 0.8rem; z-index: 100; }
+        .tip { position: fixed; bottom: 10px; width: 100%; text-align: center; color: white; font-size: 0.8rem; z-index: 100; opacity: 0.6; }
     </style>
-</head>
 
 <body>
 
@@ -629,4 +435,5 @@
 
 
 </html>
+
 
