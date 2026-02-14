@@ -2,190 +2,205 @@
 <html lang="es">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nuestra Historia en Tulipanes 🌷</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Historia en Tulipanes 🌷</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;1,700&display=swap"
+        rel="stylesheet">
 
-<style>
+    <style>
+        :root {
+            --color-papel: #fefcf5;
+            --color-texto: #5d4037;
+            --color-tulipan: #ff8a80;
+        }
 
-:root {
-    --color-papel: #fefcf5;
-    --color-texto: #5d4037;
-    --color-tulipan: #ff8a80;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        body {
+            background-color: #2c3e50;
+            font-family: 'Playfair Display', serif;
+            overflow: hidden;
+        }
 
-body {
-    background-color: #2c3e50;
-    font-family: 'Playfair Display', serif;
-    overflow: hidden;
-}
+        /* LIBRO */
+        .libro {
+            display: flex;
+            width: 600vw;
+            height: 100vh;
+            transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
 
-/* LIBRO */
-.libro {
-    display: flex;
-    width: 600vw;
-    height: 100vh;
-    transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
+        .pagina {
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--color-papel);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.05);
+            border-right: 2px solid rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
 
-.pagina {
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--color-papel);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    position: relative;
-    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.05);
-    border-right: 2px solid rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #d32f2f;
+            margin-bottom: 10px;
+        }
 
-h1 {
-    font-family: 'Dancing Script', cursive;
-    font-size: 3rem;
-    color: #d32f2f;
-    margin-bottom: 10px;
-}
+        p {
+            max-width: 600px;
+            line-height: 1.8;
+            text-align: center;
+            color: var(--color-texto);
+            font-weight: 500;
+        }
 
-p {
-    max-width: 600px;
-    line-height: 1.8;
-    text-align: center;
-    color: var(--color-texto);
-    font-weight: 500;
-}
+        /* COLLAGE */
+        .collage-container {
+            position: relative;
+            width: 90%;
+            height: 450px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-/* COLLAGE */
-.collage-container {
-    position: relative;
-    width: 90%;
-    height: 450px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+        .foto {
+            position: absolute;
+            width: 220px;
+            border: 10px solid #fff;
+            border-bottom: 40px solid #fff;
+            box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.15);
+            object-fit: cover;
+        }
 
-.foto {
-    position: absolute;
-    width: 220px;
-    border: 10px solid #fff;
-    border-bottom: 40px solid #fff;
-    box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.15);
-    object-fit: cover;
-}
+        .post-it {
+            position: absolute;
+            width: 120px;
+            padding: 15px;
+            background: #fff9c4;
+            box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.1);
+            font-family: 'Dancing Script', cursive;
+            font-size: 0.9rem;
+            text-align: center;
+        }
 
-.post-it {
-    position: absolute;
-    width: 120px;
-    padding: 15px;
-    background: #fff9c4;
-    box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Dancing Script', cursive;
-    font-size: 0.9rem;
-    text-align: center;
-}
+        .post-it.azul {
+            background: #e3f2fd;
+        }
 
-.post-it.azul { background: #e3f2fd; }
-.post-it.rosa { background: #fce4ec; }
+        .post-it.rosa {
+            background: #fce4ec;
+        }
 
-/* CARTA */
-.carta-abierta {
-    display: none;
-    max-width: 80%;
-    background: #fdf5e6;
-    padding: 40px;
-    border: 1px solid #d4a373;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.5rem;
-    line-height: 1.5;
-    color: #5d4037;
-    overflow-y: auto;
-    max-height: 80vh;
-}
+        /* CARTA */
+        .carta-abierta {
+            display: none;
+            max-width: 80%;
+            background: #fdf5e6;
+            padding: 40px;
+            border: 1px solid #d4a373;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            line-height: 1.5;
+            color: #5d4037;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
 
-.bloqueo {
-    text-align: center;
-    background: white;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
+        .bloqueo {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
 
-.tip {
-    position: fixed;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
-    color: white;
-    font-size: 0.8rem;
-    z-index: 100;
-}
+        .tip {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 0.8rem;
+            z-index: 100;
+        }
 
-/* RESPONSIVE MOVIL */
-@media (max-width: 768px) {
+        /* RESPONSIVE MOVIL */
+        @media (max-width: 768px) {
 
-    h1 { font-size: 1.8rem; }
-    p { font-size: 0.95rem; }
+            h1 {
+                font-size: 1.8rem;
+            }
 
-    .foto {
-        width: 150px !important;
-        border-bottom: 25px solid #fff;
-    }
+            p {
+                font-size: 0.95rem;
+            }
 
-    .post-it {
-        width: 100px !important;
-        font-size: 0.75rem;
-        padding: 10px;
-    }
+            .foto {
+                width: 150px !important;
+                border-bottom: 25px solid #fff;
+            }
 
-    .carta-abierta {
-        max-width: 95%;
-        font-size: 1.1rem;
-        padding: 20px;
-    }
-}
+            .post-it {
+                width: 100px !important;
+                font-size: 0.75rem;
+                padding: 10px;
+            }
 
-/* MOVIL HORIZONTAL */
-@media (max-height: 500px) and (orientation: landscape) {
+            .carta-abierta {
+                max-width: 95%;
+                font-size: 1.1rem;
+                padding: 20px;
+            }
+        }
 
-    h1 { font-size: 1.4rem; }
-    p { font-size: 0.8rem; }
+        /* MOVIL HORIZONTAL */
+        @media (max-height: 500px) and (orientation: landscape) {
 
-    .foto {
-        width: 120px !important;
-        border-bottom: 18px solid #fff;
-    }
+            h1 {
+                font-size: 1.4rem;
+            }
 
-    .post-it {
-        width: 90px !important;
-        font-size: 0.7rem;
-        padding: 8px;
-    }
+            p {
+                font-size: 0.8rem;
+            }
 
-    .carta-abierta {
-        font-size: 0.95rem;
-        max-height: 70vh;
-    }
-}
+            .foto {
+                width: 120px !important;
+                border-bottom: 18px solid #fff;
+            }
 
-</style>
+            .post-it {
+                width: 90px !important;
+                font-size: 0.7rem;
+                padding: 8px;
+            }
+
+            .carta-abierta {
+                font-size: 0.95rem;
+                max-height: 70vh;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="libro" id="libro">
+    <div class="libro" id="libro">
         <section class="pagina">
             <span class="borde-decorativo" style="top: 5%; left: 2%;">✨</span>
             <span class="borde-decorativo" style="top: 5%; right: 3%; animation-delay: 1s;">💖</span>
@@ -455,66 +470,67 @@ p {
         </section>
     </div>
 
-<div class="tip">Presiona [ENTER] o desliza 👉 para pasar la página 💗</div>
+    <div class="tip">Presiona [ENTER] o desliza 👉 para pasar la página 💗</div>
 
-<script>
+    <script>
 
-let paginaActual = 0;
-const totalPaginas = 6;
-const libro = document.getElementById('libro');
+        let paginaActual = 0;
+        const totalPaginas = 6;
+        const libro = document.getElementById('libro');
 
-function cambiarPagina(direccion) {
-    if (direccion === "next" && paginaActual < totalPaginas - 1) {
-        paginaActual++;
-    }
-    if (direccion === "prev" && paginaActual > 0) {
-        paginaActual--;
-    }
-    libro.style.transform = `translateX(-${paginaActual * 100}vw)`;
-}
+        function cambiarPagina(direccion) {
+            if (direccion === "next" && paginaActual < totalPaginas - 1) {
+                paginaActual++;
+            }
+            if (direccion === "prev" && paginaActual > 0) {
+                paginaActual--;
+            }
+            libro.style.transform = `translateX(-${paginaActual * 100}vw)`;
+        }
 
-/* ENTER */
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        if (document.activeElement.tagName === 'INPUT') return;
-        cambiarPagina("next");
-    }
-});
+        /* ENTER */
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                if (document.activeElement.tagName === 'INPUT') return;
+                cambiarPagina("next");
+            }
+        });
 
-/* SWIPE MOVIL */
-let startX = 0;
-let endX = 0;
+        /* SWIPE MOVIL */
+        let startX = 0;
+        let endX = 0;
 
-document.addEventListener('touchstart', e => {
-    startX = e.changedTouches[0].screenX;
-});
+        document.addEventListener('touchstart', e => {
+            startX = e.changedTouches[0].screenX;
+        });
 
-document.addEventListener('touchend', e => {
-    endX = e.changedTouches[0].screenX;
-    handleSwipe();
-});
+        document.addEventListener('touchend', e => {
+            endX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
 
-function handleSwipe() {
-    const threshold = 50;
-    if (startX - endX > threshold) {
-        cambiarPagina("next");
-    } else if (endX - startX > threshold) {
-        cambiarPagina("prev");
-    }
-}
+        function handleSwipe() {
+            const threshold = 50;
+            if (startX - endX > threshold) {
+                cambiarPagina("next");
+            } else if (endX - startX > threshold) {
+                cambiarPagina("prev");
+            }
+        }
 
-/* VERIFICAR FECHA */
-function verificar() {
-    const resp = document.getElementById('respuesta').value;
-    if (resp === "31/08/2024") {
-        document.getElementById('trivia').style.display = 'none';
-        document.getElementById('carta').style.display = 'block';
-    } else {
-        alert("Mmm... esa no es la fecha, mi amor 💗 ¡Intenta de nuevo!");
-    }
-}
+        /* VERIFICAR FECHA */
+        function verificar() {
+            const resp = document.getElementById('respuesta').value;
+            if (resp === "31/08/2024") {
+                document.getElementById('trivia').style.display = 'none';
+                document.getElementById('carta').style.display = 'block';
+            } else {
+                alert("Mmm... esa no es la fecha, mi amor 💗 ¡Intenta de nuevo!");
+            }
+        }
 
-</script>
+    </script>
 
 </body>
+
 </html>
