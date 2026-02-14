@@ -264,14 +264,65 @@
 
         .bloqueo { text-align: center; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
 
-        /* RESPONSIVE CELULAR HORIZONTAL */
-        @media (max-height: 500px) {
-            h1 { font-size: 1.8rem; }
-            .foto { width: 160px; border-bottom: 25px solid #fff; }
-            .post-it { width: 110px; height: 110px; font-size: 0.8rem; }
-            .collage-container { height: 280px; }
-            p { font-size: 0.9rem; }
-        }
+       /* AJUSTES PARA MÓVIL (PANTALLA VERTICAL) */
+@media (max-width: 600px) {
+    .libro {
+        width: 600vw; /* Asegura que las 6 páginas sigan alineadas horizontalmente */
+    }
+
+    h1 {
+        font-size: 2rem !important; /* Títulos más chicos para que no ocupen media pantalla */
+        margin-bottom: 5px;
+    }
+
+    .collage-container {
+        height: 40vh !important; /* Reducimos el área de fotos */
+        flex-direction: column; /* Si usaste flex, que se pongan una arriba de otra */
+        gap: 5px;
+    }
+
+    .foto {
+        width: 140px !important; /* Fotos más pequeñas para que quepan varias */
+        border: 6px solid #fff !important;
+        border-bottom: 25px solid #fff !important;
+    }
+
+    /* Ajustamos los post-its para que no tapen las fotos en pantallas chicas */
+    .post-it {
+        width: 80px !important;
+        height: 80px !important;
+        font-size: 0.6rem !important;
+        padding: 5px !important;
+    }
+
+    p {
+        font-size: 0.85rem !important;
+        max-width: 90% !important;
+        line-height: 1.3 !important;
+        margin-top: 10px !important;
+    }
+
+    .carta-abierta {
+        padding: 20px !important;
+        font-size: 1rem !important;
+        max-width: 95% !important;
+    }
+}
+
+/* Tip para que ella sepa que debe girar el cel si quiere verlo mejor */
+@media (orientation: portrait) {
+    body::before {
+        content: "Gira tu celular para una mejor experiencia 🔄";
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        background: var(--color-tulipan);
+        color: white;
+        text-align: center;
+        z-index: 9999;
+        font-size: 0.7rem;
+        padding: 5px;
+    }
+}
 
         .tip { position: fixed; bottom: 10px; width: 100%; text-align: center; color: white; font-size: 0.8rem; z-index: 100; }
     </style>
@@ -578,3 +629,4 @@
 
 
 </html>
+
